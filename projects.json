@@ -1,51 +1,84 @@
 [
       {
-        "id": "project_a",
-        "name": "Project A",
-        "description": "Main website and application",
-        "icon": "🌐",
+        "id": "quarkz",
+        "name": "Quarkz",
+        "description": "An Online Quiz And Education Platform.",
+        "icon": "📖",
         "status": "operational",
-        "url": "https://example.com/project_a",
+        "url": "https://quarkz.mtt.one",
         "lastUpdated": "2025-03-22T10:00:00Z",
         "incident": null
       },
       {
-        "id": "project_b",
-        "name": "Project B Dashboard",
-        "description": "Analytics and reporting dashboard",
-        "icon": "📊",
+        "id": "healthlink",
+        "name": "HealthLink",
+        "description": "An advanced tele-health platform that facilitates remote communication between doctors and patients, with AI routing in the form of a chatbot to first ask preliminary questions about patients' conditions and redirect them to the correct doctor based on the predicted illness.",
+        "icon": "🧑‍⚕️",
         "status": "affected",
-        "url": "https://example.com/project_b",
-        "lastUpdated": "2025-03-22T09:30:00Z",
+        "url": "https://healthlink.mtt.one",
+        "lastUpdated": "2025-03-22T10:00:00Z",
         "incident": {
           "title": "Degraded Performance",
-          "description": "We're experiencing slower than usual response times. Our engineering team is investigating the issue."
+          "description": "AI Chat with MediBot is no longer operational."
         }
       },
       {
-        "id": "project_c",
-        "name": "Project C API",
-        "description": "Public API services",
-        "icon": "🔌",
-        "status": "offline",
-        "url": "https://api.example.com",
-        "lastUpdated": "2025-03-22T08:15:00Z",
-        "incident": {
-          "title": "Service Outage",
-          "description": "Our API services are currently down due to a database issue. We expect to resolve this within the next hour."
-        }
-      },
-      {
-        "id": "project_d",
-        "name": "Project D",
-        "description": "Documentation portal",
-        "icon": "📚",
+        "id": "codeblaze",
+        "name": "Codeblaze",
+        "description": "An All-Feature integrated platform where coders across the learning curve, can learn, hone their skills, and test themselves.",
+        "icon": "🧑‍💻",
         "status": "suspended",
-        "url": "https://docs.example.com",
-        "lastUpdated": "2025-03-21T14:00:00Z",
+        "url": "https://codeblaze.mtt.one/",
+        "lastUpdated": "2025-03-22T10:00:00Z",
         "incident": {
-          "title": "Temporary Suspension",
-          "description": "Service temporarily suspended for scheduled maintenance. Expected to resume on March 23rd."
+          "title": "Servers Offline",
+          "description": "Service has been suspended for due to lack of users."
+        }
+      },
+      {
+        "id": "fernos",
+        "name": "FernOS",
+        "description": "A browser-based lightweight OS, made in Svelte.",
+        "icon": "🛜",
+        "status": "operational",
+        "url": "https://fern.mtt.one",
+        "lastUpdated": "2025-03-22T10:00:00Z",
+        "incident": null
+      },
+      {
+        "id": "timesup",
+        "name": "TimesUp!",
+        "description": "A real-time quiz application supporting live quizzes, instant feedback, and compete for top scores.",
+        "icon": "📝",
+        "status": "suspended",
+        "url": "https://timesup.mtt.one/",
+        "lastUpdated": "2025-03-22T10:00:00Z",
+        "incident": {
+          "title": "Servers Offline",
+          "description": "Service has been suspended for due to lack of users."
+        }
+      },
+      {
+        "id": "lingo",
+        "name": "Lingo",
+        "description": "a gamified language learning app with features like personalized onboarding, dynamic lessons, real-time leaderboards, and progress tracking.",
+        "icon": "🔡",
+        "status": "operational",
+        "url": "https://lingo.mtt.one",
+        "lastUpdated": "2025-03-22T10:00:00Z",
+        "incident": null
+      },
+      {
+        "id": "demo",
+        "name": "demo",
+        "description": "demo",
+        "icon": "🔡",
+        "status": "offline",
+        "url": "https://demo.mtt.one",
+        "lastUpdated": "2025-03-22T10:00:00Z",
+        "incident":  {
+          "title": "Demo",
+          "description": "Demo"
         }
       }
     ]
