@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Status Dashboard</title>
+  <style>
+    :root {
+      --background: #ffffff;
+      --foreground: #020817;
+      --card: #ffffff;
+      --card-foreground: #020817;
+      --primary: #0f172a;
+      --primary-foreground: #f8fafc;
+      --secondary: #f1f5f9;
+      --secondary-foreground: #0f172a;
+      --muted: #f1f5f9;
+      --muted-foreground: #64748b;
+      --accent: #f1f5f9;
+      --accent-foreground: #0f172a;
+      --destructive: #ef4444;
+      --destructive-foreground: #f8fafc;
+      --border: #e2e8f0;
+      --input: #e2e8f0;
+      --ring: #0f172a;
+      --radius: 0.5rem;
+
+      /* Status Colors */
+      --status-operational: #22c55e;
+      --status-affected: #eab308;
+      --status-offline: #ef4444;
+      --status-suspended: #6b7280;
+    }
+
+    .dark {
+      --background: #020817;
+      --foreground: #f8fafc;
+      --card: #0f172a;
+      --card-foreground: #f8fafc;
+      --primary: #f8fafc;
+      --primary-foreground: #0f172a;
+      --secondary: #1e293b;
+      --secondary-foreground: #f8fafc;
+      --muted: #1e293b;
+      --muted-foreground: #94a3b8;
+      --accent: #1e293b;
+      --accent-foreground: #f8fafc;
+      --destructive: #ef4444;
+      --destructive-foreground: #f8fafc;
+      --border: #1e293b;
+      --input: #1e293b;
+      --ring: #cbd5e1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      transition: background-color 0.3s, color 0.3s;
+      padding: 2rem;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 64rem;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      background-color: var(--secondary);
+      color: var(--secondary-foreground);
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--muted);
+    }
+
+    .card {
+      background-color: var(--card);
+      color: var(--card-foreground);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--ring);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-header {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .project-icon {
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--secondary);
+      border-radius: var(--radius);
+      font-size: 1.5rem;
+    }
+
+    .project-title {
+      flex: 1;
+    }
+
+    .project-title h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .status-operational {
+      background-color: rgba(34, 197, 94, 0.1);
+      color: var(--status-operational);
+      border: 1px solid var(--status-operational);
+    }
+
+    .status-affected {
+      background-color: rgba(234, 179, 8, 0.1);
+      color: var(--status-affected);
+      border: 1px solid var(--status-affected);
+    }
+
+    .status-offline {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--status-offline);
+      border: 1px solid var(--status-offline);
+    }
+
+    .status-suspended {
+      background-color: rgba(107, 114, 128, 0.1);
+      color: var(--status-suspended);
+      border: 1px solid var(--status-suspended);
+    }
+
+    .project-details {
+      margin-top: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-label {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      margin-bottom: 0.25rem;
+    }
+
+    .detail-value {
+      font-size: 0.875rem;
+    }
+
+    .incident {
+      background-color: var(--secondary);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .incident-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .incident-description {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 500;
+      height: 2.5rem;
+      padding: 0 1rem;
+      background-color: var(--primary);
+      color: var(--primary-foreground);
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border: none;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: rgba(15, 23, 42, 0.9);
+    }
+
+    .dark .button:hover {
+      background-color: rgba(248, 250, 252, 0.9);
+    }
+
+    .button-secondary {
+      background-color: var(--secondary);
+      color: var(--secondary-foreground);
+    }
+
+    .button-secondary:hover {
+      background-color: var(--muted);
+    }
+
+    .button-outline {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+    }
+
+    .button-outline:hover {
+      background-color: var(--secondary);
+      color: var(--secondary-foreground);
+    }
+
+    .not-found {
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .not-found h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .not-found p {
+      color: var(--muted-foreground);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .dot-operational {
+      background-color: var(--status-operational);
+    }
+
+    .dot-affected {
+      background-color: var(--status-affected);
+    }
+
+    .dot-offline {
+      background-color: var(--status-offline);
+    }
+
+    .dot-suspended {
+      background-color: var(--status-suspended);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Project Status Dashboard</h1>
+      <button id="themeToggle" class="theme-toggle">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">Dark Mode</span>
+      </button>
+    </header>
+    
+    <div id="projectContainer">
+      <!-- Project data will be loaded here -->
+      <div class="not-found">
+        <h2>Loading...</h2>
+        <p>Please wait while we fetch the project status.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.body.classList.add('dark');
+      themeIcon.textContent = '☀️';
+      themeText.textContent = 'Light Mode';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      
+      if (document.body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light Mode';
+      } else {
+        localStorage.setItem('theme', 'light');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+      }
+    });
+    async function fetchJsonArray(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error("Error fetching JSON:", error);
+        return [];
+    }
+    }
+    // Sample project data array (in a real app, this might come from an API)
+    let projectsData = []
+
+    // Get the project ID from the URL hash
+    function getProjectIdFromUrl() {
+      const hash = window.location.hash;
+      if (hash.startsWith('#/')) {
+        return hash.substring(2); // Remove the '#/' prefix
+      }
+      return null;
+    }
+
+    // Function to format date in a readable format
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString();
+    }
+
+    // Function to get the status display details
+    function getStatusDetails(status) {
+      const statusMap = {
+        operational: { 
+          label: "Operational", 
+          class: "status-operational",
+          dotClass: "dot-operational"
+        },
+        affected: { 
+          label: "Services Affected", 
+          class: "status-affected",
+          dotClass: "dot-affected"
+        },
+        offline: { 
+          label: "Offline", 
+          class: "status-offline",
+          dotClass: "dot-offline"
+        },
+        suspended: { 
+          label: "Suspended", 
+          class: "status-suspended",
+          dotClass: "dot-suspended"
+        }
+      };
+      
+      return statusMap[status] || statusMap.offline;
+    }
+
+    // Function to render a single project
+    function renderProject(project) {
+      const statusDetails = getStatusDetails(project.status);
+      
+      // Create the HTML for the project card
+      const projectHtml = `
+        <div class="card">
+          <div class="project-header">
+            <div class="project-icon">${project.icon}</div>
+            <div class="project-title">
+              <h2>${project.name}</h2>
+              <div>
+                <span class="status-badge ${statusDetails.class}">
+                  <span class="status-dot ${statusDetails.dotClass}"></span>
+                  ${statusDetails.label}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <p>${project.description}</p>
+          
+          <div class="project-details">
+            <div class="detail-item">
+              <span class="detail-label">Last Updated</span>
+              <span class="detail-value">${formatDate(project.lastUpdated)}</span>
+            </div>
+            
+            ${project.incident ? `
+              <div class="incident">
+                <div class="incident-title">${project.incident.title}</div>
+                <div class="incident-description">${project.incident.description}</div>
+              </div>
+            ` : ''}
+          </div>
+          
+          <div style="margin-top: 1.5rem;">
+            <a href="${project.url}" class="button" target="_blank">Visit Site</a>
+          </div>
+        </div>
+      `;
+      
+      return projectHtml;
+    }
+
+    // Function to render all projects or a specific one
+    function renderProjects() {
+      const projectContainer = document.getElementById('projectContainer');
+      const projectId = getProjectIdFromUrl();
+      
+      let content = '';
+      
+      if (projectId) {
+        // Find the specific project
+        const project = projectsData.find(p => p.id === projectId);
+        
+        if (project) {
+          content = renderProject(project);
+        } else {
+          content = `
+            <div class="not-found">
+              <h2>Project Not Found</h2>
+              <p>The project "${projectId}" could not be found.</p>
+            </div>
+          `;
+        }
+      } else {
+        // Render all projects
+        content = projectsData.map(renderProject).join('');
+      }
+      
+      projectContainer.innerHTML = content;
+    }
+    async function main() {
+      projectsData = await fetchJsonArray('data.json');
+      renderProjects();
+      // Re-render when the hash changes
+      window.addEventListener('hashchange', renderProjects);
+    }
+    // Initial render
+    main();
+
+    
+  </script>
+</body>
+</html>
