@@ -501,7 +501,7 @@
       projectContainer.innerHTML = content;
     }
     async function main() {
-      projectsData = await fetchJsonArray('data.json');
+      projectsData = await fetchJsonArray('projects.json');
       renderProjects();
       // Re-render when the hash changes
       window.addEventListener('hashchange', renderProjects);
