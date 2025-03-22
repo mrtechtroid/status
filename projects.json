@@ -1,0 +1,51 @@
+[
+      {
+        id: "project_a",
+        name: "Project A",
+        description: "Main website and application",
+        icon: "🌐",
+        status: "operational",
+        url: "https://example.com/project_a",
+        lastUpdated: "2025-03-22T10:00:00Z",
+        incident: null
+      },
+      {
+        id: "project_b",
+        name: "Project B Dashboard",
+        description: "Analytics and reporting dashboard",
+        icon: "📊",
+        status: "affected",
+        url: "https://example.com/project_b",
+        lastUpdated: "2025-03-22T09:30:00Z",
+        incident: {
+          title: "Degraded Performance",
+          description: "We're experiencing slower than usual response times. Our engineering team is investigating the issue."
+        }
+      },
+      {
+        id: "project_c",
+        name: "Project C API",
+        description: "Public API services",
+        icon: "🔌",
+        status: "offline",
+        url: "https://api.example.com",
+        lastUpdated: "2025-03-22T08:15:00Z",
+        incident: {
+          title: "Service Outage",
+          description: "Our API services are currently down due to a database issue. We expect to resolve this within the next hour."
+        }
+      },
+      {
+        id: "project_d",
+        name: "Project D",
+        description: "Documentation portal",
+        icon: "📚",
+        status: "suspended",
+        url: "https://docs.example.com",
+        lastUpdated: "2025-03-21T14:00:00Z",
+        incident: {
+          title: "Temporary Suspension",
+          description: "Service temporarily suspended for scheduled maintenance. Expected to resume on March 23rd."
+        }
+      }
+    ];
