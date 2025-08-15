@@ -4,10 +4,13 @@
         "name": "Quarkz",
         "description": "An Online Quiz And Education Platform.",
         "icon": "📖",
-        "status": "operational",
+        "status": "affected",
         "url": "https://quarkz.mtt.one",
         "lastUpdated": "2025-03-22T10:00:00Z",
-        "incident": null
+        "incident": {
+          "title": "Servers will be going Offline.",
+          "description": "Service has been suspended for due to lack of users."
+        }
       },
       {
         "id": "healthlink",
